@@ -30,7 +30,6 @@ export default class Product extends PageManager {
         collapsibleFactory();
 
         this.productDetails = new ProductDetails($('.productView'), this.context, window.BCData.product_attributes);
-        this.productDetails.setProductVariant();
 
         videoGallery();
 

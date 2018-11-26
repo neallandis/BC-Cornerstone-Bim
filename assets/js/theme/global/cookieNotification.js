@@ -17,18 +17,15 @@ export default function () {
     });
     */
 
-    const $privacyDialog = $('.cookieMessage');
+    utils.hooks.on('cookie-privacy-notification', (event) => {
+        event.preventDefault();
 
-    if (document.cookie.indexOf('ACCEPT_COOKIE_USAGE') === -1) {
+        const $privacyDialog = $('.cookieMessage');
         $privacyDialog.show();
-    }
 
-    $('body').on('click', '[data-privacy-accept]', () => {
-        const date = new Date();
-        date.setDate(date.getDate() + 365);
-        document.cookie = `ACCEPT_COOKIE_USAGE=1;expires=${date.toGMTString()}; path=/`;
-
-        utils.hooks.emit('cookie-privacy-accepted');
-        $privacyDialog.hide();
+        $('body').on('click', '[data-privacy-accept]', () => {
+            utils.hooks.emit('cookie-privacy-accepted');
+            $privacyDialog.hide();
+        });
     });
 }

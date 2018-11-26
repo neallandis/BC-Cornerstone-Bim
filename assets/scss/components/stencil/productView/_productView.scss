@@ -35,7 +35,7 @@
     }
 
     @media (min-width: $screen-xxsmall) and (max-width: $screen-medium) {
-        pointer-events: none;
+       /* pointer-events: none;*/
     }
 }
 
@@ -76,8 +76,8 @@
 
     img {
         @include lazy-loaded-img;
-        max-height: 50px;
-        max-width: 50px;
+        max-height:100%;
+        max-width:90%;
         width: auto;
     }
 }
@@ -279,7 +279,7 @@
 .productView-options {
     @include clearfix;
     margin-bottom: spacing("single");
-    text-align: center;
+    text-align: left;
 
     @include breakpoint("small") {
         text-align: left;

@@ -65,13 +65,13 @@
                 </figure>
 
                 <div class="productView-details">
-                    <h4 class="productView-title">
-                        {{name}}
-                    </h4>
-
                     <div class="productView-brand">
                         {{brand.name}}
                     </div>
+                    
+                    <h4 class="productView-title">
+                        {{name}}
+                    </h4>
 
                     <div class="productView-price">
                         {{#or ../customer (if ../theme_settings.restrict_to_login '!==' true)}}
@@ -118,7 +118,7 @@
             <ul class="productGrid">
                 {{#each cart.suggested_products}}
                     <li class="product">
-                        {{> components/products/card settings=../settings hide_product_quick_view=true theme_settings=../theme_settings}}
+                        {{> components/products/card hide_product_quick_view=true theme_settings=../theme_settings}}
                     </li>
                 {{/each}}
             </ul>

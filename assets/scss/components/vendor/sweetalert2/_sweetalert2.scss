@@ -79,6 +79,10 @@
         background-color: $alert-button-cancel-bgColor;
         border-color: $alert-button-cancel-borderColor;
         color: $alert-button-cancel-color;
+
+        @include breakpoint("xsmall") {
+            margin-left: $button-adjacentButton-marginLeft;
+        }
     }
 
     .swal2-cancel:focus,
@@ -92,9 +96,5 @@
         background-color: $alert-button-cancel-bgColorActive;
         border-color: $alert-button-cancel-borderColorActive;
         color: $alert-button-cancel-colorActive;
-    }
-
-    .button + .button {
-        margin-left: $button-adjacentButton-marginLeft;
     }
 }

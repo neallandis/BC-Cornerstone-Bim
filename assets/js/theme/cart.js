@@ -27,6 +27,7 @@ export default class Cart extends PageManager {
         const minError = $el.data('quantityMinError');
         const maxError = $el.data('quantityMaxError');
         const newQty = $target.data('action') === 'inc' ? oldQty + 1 : oldQty - 1;
+
         // Does not quality for min/max quantity
         if (newQty < minQty) {
             return swal({
@@ -42,57 +43,6 @@ export default class Cart extends PageManager {
 
         this.$overlay.show();
 
-        utils.api.cart.itemUpdate(itemId, newQty, (err, response) => {
-            this.$overlay.hide();
-
-            if (response.data.status === 'succeed') {
-                // if the quantity is changed "1" from "0", we have to remove the row.
-                const remove = (newQty === 0);
-
-                this.refreshContent(remove);
-            } else {
-                $el.val(oldQty);
-                swal({
-                    text: response.data.errors.join('\n'),
-                    type: 'error',
-                });
-            }
-        });
-    }
-
-    cartUpdateQtyTextChange($target, preVal = null) {
-        const itemId = $target.data('cartItemid');
-        const $el = $(`#qty-${itemId}`);
-        const maxQty = parseInt($el.data('quantityMax'), 10);
-        const minQty = parseInt($el.data('quantityMin'), 10);
-        const oldQty = preVal !== null ? preVal : minQty;
-        const minError = $el.data('quantityMinError');
-        const maxError = $el.data('quantityMaxError');
-        const newQty = parseInt(Number($el.attr('value')), 10);
-        let invalidEntry;
-        // Does not quality for min/max quantity
-        if (!newQty) {
-            invalidEntry = $el.attr('value');
-            $el.val(oldQty);
-            return swal({
-                text: `${invalidEntry} is not a valid entry`,
-                type: 'error',
-            });
-        } else if (newQty < minQty) {
-            $el.val(oldQty);
-            return swal({
-                text: minError,
-                type: 'error',
-            });
-        } else if (maxQty > 0 && newQty > maxQty) {
-            $el.val(oldQty);
-            return swal({
-                text: maxError,
-                type: 'error',
-            });
-        }
-
-        this.$overlay.show();
         utils.api.cart.itemUpdate(itemId, newQty, (err, response) => {
             this.$overlay.hide();
 
@@ -212,9 +162,7 @@ export default class Cart extends PageManager {
     bindCartEvents() {
         const debounceTimeout = 400;
         const cartUpdate = _.bind(_.debounce(this.cartUpdate, debounceTimeout), this);
-        const cartUpdateQtyTextChange = _.bind(_.debounce(this.cartUpdateQtyTextChange, debounceTimeout), this);
         const cartRemoveItem = _.bind(_.debounce(this.cartRemoveItem, debounceTimeout), this);
-        let preVal;
 
         // cart update
         $('[data-cart-update]', this.$cartContent).on('click', event => {
@@ -224,17 +172,6 @@ export default class Cart extends PageManager {
 
             // update cart quantity
             cartUpdate($target);
-        });
-
-        // cart qty manually updates
-        $('.cart-item-qty-input', this.$cartContent).on('focus', () => {
-            preVal = this.value;
-        }).change(event => {
-            const $target = $(event.currentTarget);
-            event.preventDefault();
-
-            // update cart quantity
-            cartUpdateQtyTextChange($target, preVal);
         });
 
         $('.cart-remove', this.$cartContent).on('click', event => {

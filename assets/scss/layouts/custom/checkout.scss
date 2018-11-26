@@ -1,0 +1,57 @@
+// =============================================================================
+// Stencil Checkout  - Customize the checkout experience
+// =============================================================================
+//
+// This file is for checkout customizations for Default one-page checkout.
+//
+// -----------------------------------------------------------------------------
+
+
+body,.btn
+{
+    font-family: 'Lato', sans-serif;
+
+}
+@font-face {
+   font-family: 'Helvetica Neu Bold';
+   src: url("/content/fonts/helvetica_neu_bold.ttf");
+}
+div#Header{padding:25px 0;background:#fff;}
+#Header .inner .header-logo a img#LogoImage {max-width:100%;display:inline-block;margin: 0 auto;}
+#Header .inner .header-logo {padding:0;text-align:center;}
+#LayoutColumn1 .ExpressCheckoutTitle a.ChangeLink {border:1px solid #0c0297;color: #fff;background:#0c0297;border-radius:30px;}
+#LayoutColumn1 .ExpressCheckoutTitle a.ChangeLink:hover {border: 1px solid #0c0297;color: #0c0297;background: #fff;}
+#LayoutColumn1 .ExpressCheckoutTitle h3 {color: #252525;font-weight: 900;}
+#LayoutColumn1 .ExpressCheckoutTitle span.ExpressCheckoutCompletedContent {color: #000;}
+#LayoutColumn1 .ExpressCheckoutTitle .step {background:#0c0297;color: #fff; }
+#LayoutColumn1 h4, p {color: #000;}
+#LayoutColumn1 .btn {background:#0c0297;text-decoration: none;color: #fff;display: inline-block;border-radius: 30px; padding-top:10px!important;
+padding-bottom:10px!important;border:1px solid #0c0297;border-radius: 30px;}
+#LoginButton.btn {float:left;}
+#LayoutColumn1 .btn:hover {background: #fff;color:#0c0297;border:1px solid #0c0297;border-radius: 30px;} 
+#LayoutColumn1 dl dd input.Textbox {border: 1px solid #0c0297;border-radius: 3px;}
+#LayoutColumn1 #LoginForm dl dd a {padding-left: 20px;color: #000;font-size: 14px;}
+#LayoutColumn1 #LoginForm dl dd a:hover {color: #0c0297;text-decoration: underline;}
+#LayoutColumn1 #LoginForm dl dt {color: #000;}
+#LayoutColumn1 dl dt span.FormFieldLabel {color: #000}
+#LayoutColumn1 dl dd .selector {border: 1px solid #0c0297;border-radius:3px;}
+#uniform-sel_billing_address, #uniform-sel_shipping_address {border: 1px solid #0c0297;border-radius:3px;}
+
+.optimizedCheckout-header {text-align: center!important;}
+header.checkoutHeader.optimizedCheckout-header {background:transparent;padding:25px 0;}
+#micro-app-ng-checkout .layout-main h2.stepHeader-title.optimizedCheckout-headingPrimary {color: #252525;font-weight: 900;}
+#micro-app-ng-checkout .layout-main .optimizedCheckout-step {background:#2d4762;color: #fff;}
+#micro-app-ng-checkout .layout-main .optimizedCheckout-form-input, select.form-select, .optimizedCheckout-form-input:focus, select.form-select:focus, select.form-select:hover {border: 1px solid #2d4762;border-radius:0;}
+#micro-app-ng-checkout .layout-main button#checkout-customer-continue {background:#2d4762;border-radius: 0;border-color: #2d4762;}
+#micro-app-ng-checkout .layout-main button#checkout-customer-continue:hover {background:#fff;border-color:#0c0397;color:#0c0297}
+#micro-app-ng-checkout .layout-main .optimizedCheckout-overlay {border-color: #2d4762;border-radius:0;}
+#micro-app-ng-checkout .layout-main .optimizedCheckout-buttonSecondary {background:#2d4762;border-color: #2d4762;color: #fff;border-radius:0;}
+#micro-app-ng-checkout .layout-main .optimizedCheckout-buttonSecondary:hover, .optimizedCheckout-buttonSecondary:focus {background: #fff;border-color: #0c0297;color: #0c0297;}
+#micro-app-ng-checkout aside.layout-cart.is-sticky h3.cart-title.optimizedCheckout-headingSecondary {color: #252525;font-weight: 900;}
+#micro-app-ng-checkout .layout-main .form-fieldset .form-body .form-actions button.optimizedCheckout-buttonPrimary {background:#0c0297;border: 1px solid #0c0297;border-radius:3px;}
+#micro-app-ng-checkout .layout-main .form-fieldset .form-body .form-actions button.optimizedCheckout-buttonPrimary:hover, button.optimizedCheckout-buttonPrimary:focus {background: #fff;border-color: #0c0297;color: #0c0297;}
+.checkoutHeader-content{padding:0;max-width:100%;}
+#Header > .inner{max-width: 100%;width: 100%;}
+.free_ship_banner{ max-width: 84%; text-align: center; margin: 20px auto; background-color: #0992b4; padding: 0.5rem 1.5rem; }
+.free_ship_banner p{ color: #fff; margin-bottom: 0; }
+.cart-priceItem--total .cart-priceItem-value{color:#000;}

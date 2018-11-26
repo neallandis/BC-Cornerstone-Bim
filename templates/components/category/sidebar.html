@@ -1,20 +1,84 @@
 <nav>
-    {{#if category.subcategories}}
-        <div class="sidebarBlock">
-            <h5 class="sidebarBlock-heading">{{category.name}}</h5>
-            <ul class="navList">
-                {{#each category.subcategories}}
-                <li class="navList-item">
-                    <a class="navList-action" href="{{url}}" alt="{{name}}" title="{{name}}">{{name}}</a>
-                </li>
-                {{/each}}
-            </ul>
-        </div>
-    {{/if}}
-
-    {{#if category.faceted_search_enabled}}
+    <div class="category-list desktop_cateogory">
+        <h5 class="sidebarBlock-heading">Categories</h5>
+        <ul class="navList">
+               {{#each categories}}
+                    <li class="navList-item">
+                         <a class="navList-action" href="{{url}}" alt="{{name}}" title="{{name}}">{{name}}</a><span class="add_icon"><i class="icon navPages-action-moreIcon" aria-hidden="true"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-chevron-down"></use></svg></i></span></a><span class="minus_icon"></span>
+                         {{#if children}}
+                    <ul class="sub_navList">
+                        {{#each children}}
+                        <li class="navList-item subcat swsw">
+                            <a class="navList-action " href="{{url}}" alt="{{name}}" title="{{name}}">{{name}}</a><span class="add_icon2"></span>
+                                 <ul class="submenu">
+                                 {{#each children}}
+                                 <li>
+                                    <a class="navList-action " href="{{url}}" alt="{{name}}" title="{{name}}">
+                                    {{name}}
+                                </a>
+                                </li>
+                                 {{/each}}
+                                </ul>
+                        </li>
+                        {{/each}}
+                    </ul>
+                {{/if}}
+                    </li>
+            {{/each}}
+         </ul>
+     </div>
+       {{#if category.faceted_search_enabled}}
         {{> components/faceted-search/index category}}
     {{else}}
         {{> components/category/shop-by-price shop_by_price=category.shop_by_price category_url=category.url}}
     {{/if}}
 </nav>
+
+<script language="javascript" type="text/javascript">//<![CDATA[
+    function htmlEntities(str) {
+        return String(str).replace('&amp;','&').replace('&lt;','<').replace('&gt;','>').replace('&quot;','"');
+    }
+$(document).ready(function() {
+    // create the dropdown for mobile
+    $('.category-list ul li').each(function(){
+        $('.js-mobile-sub-category-menu select').append(new Option(htmlEntities($(this).find('a').html()), $(this).find('a').attr('href')));
+
+    });
+    $('.js-mobile-sub-category-menu select option:first').attr('selected','selected');
+    $('.js-mobile-sub-category-menu select').prev().html($('.js-mobile-sub-category-menu select option:first').html());
+
+    if( !$('.category-list ul li').length ) {
+        $('.js-mobile-sub-category-menu').hide();
+    }
+
+    // page redirect on change
+    $('.js-mobile-sub-category-menu select').change(function(){
+        var href = $(this).find('option:selected').val();
+        if(href!='') {
+            window.location.replace(href);
+            window.location.href = href;
+        }
+    });
+    
+    
+    $('.shop-by-price ul li').each(function(){
+        $('.js-mobile-category-menu select').append(new Option($(this).find('a').html(), $(this).find('a').attr('href')));
+    });
+    $('.js-mobile-category-menu select option:first').attr('selected','selected');
+    $('.js-mobile-category-menu select').prev().html($('.js-mobile-category-menu select option:first').html());
+
+    if( !$('.shop-by-price ul li').length ) {
+        $('.js-mobile-category-menu').hide();
+    }
+
+    // page redirect on change
+    $('.js-mobile-category-menu select').change(function(){
+        var href = $(this).find('option:selected').val();
+        if(href!='') {
+            window.location.replace(href);
+            window.location.href = href;
+        }
+    });
+});
+//]]>
+</script>

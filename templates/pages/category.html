@@ -2,7 +2,7 @@
 category:
     shop_by_price: true
     products:
-        limit: {{theme_settings.categorypage_products_per_page}}
+        limit:16
 ---
 {{inject "categoryProductsPerPage" theme_settings.categorypage_products_per_page}}
 {{#partial "head"}}
@@ -16,38 +16,94 @@ category:
 
 {{#partial "page"}}
 
-{{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
-{{#if category.image}}
-    <img class="lazyload" data-sizes="auto" src="{{cdn 'img/loading.svg'}}" data-src="{{getImage category.image 'zoom_size'}}">
-{{/if}}
-<h1 class="page-heading">{{category.name}}</h1>
-{{{category.description}}}
-{{{snippet 'categories'}}}
-<div class="page">
-    {{#if category.faceted_search_enabled}}
-        <aside class="page-sidebar" id="faceted-search-container">
-            {{> components/category/sidebar}}
-        </aside>
-    {{else if category.subcategories}}
-        <aside class="page-sidebar" id="faceted-search-container">
-            {{> components/category/sidebar}}
-        </aside>
-    {{else if category.shop_by_price}}
-        {{#if theme_settings.shop_by_price_visibility}}
-             <aside class="page-sidebar" id="faceted-search-container">
-                {{> components/category/sidebar}}
-            </aside>
-        {{/if}}
-    {{/if}}
-
-    <main class="page-content" id="product-listing-container">
-        {{#if category.products}}
-            {{> components/category/product-listing settings=../settings}}
-        {{else}}
-            <p>{{lang 'categories.no_products'}}</p>
-        {{/if}}
-    </main>
 </div>
 
+<div class="categ_page">
+
+    <!-- <div class="categ_img">
+            {{#if category.image}}
+                <img class="lazyload" data-sizes="auto" src="{{cdn 'img/loading.svg'}}" data-src="{{getImage category.image 'zoom_size'}}">
+            {{/if}}
+                <h1 class="page-heading">{{category.name}}</h1>
+    </div> -->
+
+
+    <div class="categ_img" style=" background-image: url('{{getImage category.image 'zoom_size'}}'); background-repeat: no-repeat; background-position: center; background-size: cover;">
+        <h1 class="page-heading">{{category.name}}</h1>
+    </div>
+    <div class="bmw_form_sticky">
+        {{> components/custom/bmw_form}}
+   </div>
+
+    
+    {{{snippet 'categories'}}}
+
+    <div class="container">
+
+            <div class="filter_breadcrumbs"> 
+                    <div class="bred_div">
+                        {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+                    </div>
+                    <div class="list_filter">
+                        {{> components/products/filter sort=pagination.category.sort}}
+                   </div>     
+            </div> 
+
+        <div class="page">
+            {{#if category.faceted_search_enabled}}
+                <aside class="page-sidebar" id="faceted-search-container">
+                    {{> components/category/sidebar}}
+                </aside>
+            {{else if category.subcategories}}
+                <aside class="page-sidebar" id="faceted-search-container">
+                    {{> components/category/sidebar}}
+                </aside>
+            {{else if category.shop_by_price}}
+                {{#if theme_settings.shop_by_price_visibility}}
+                     <aside class="page-sidebar" id="faceted-search-container">
+                        {{> components/category/sidebar}}
+                    </aside>
+                {{/if}}
+            {{/if}}
+
+            <main class="page-content" id="product-listing-container">
+                {{#if category.products}}
+                    {{> components/category/product-listing}}
+                {{else}}
+                    <p>{{lang 'categories.no_products'}}</p>
+                {{/if}}
+                        <div class="categ_description">
+                            {{{category.description}}}
+                         </div>
+            </main>
+
+    </div>
+
+        </div>
+
+</div>    
 {{/partial}}
 {{> layout/base}}
+
+
+
+
+<script type="text/javascript">
+$( document ).ready(function() {  
+   $(window).scroll(function(e){ 
+       if($( window ).width() > 1023){  
+        var scroller_anchor = $(".bmw_form_sticky").offset().top;
+
+        if ($(this).scrollTop() >= scroller_anchor){
+          $(".choosetoyr_bmw").addClass("sticky-sec");
+        }
+        else if ($(this).scrollTop() < scroller_anchor) 
+        {
+            $(".choosetoyr_bmw").removeClass("sticky-sec");
+        }
+     
+     } 
+      
+   });
+});
+</script>

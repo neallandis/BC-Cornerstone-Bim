@@ -20,16 +20,13 @@ const pageClasses = {
     account_inbox: getAccount,
     account_saved_return: getAccount,
     account_returns: getAccount,
-    account_paymentmethods: getAccount,
-    account_addpaymentmethod: getAccount,
-    account_editpaymentmethod: getAccount,
     login: getLogin,
     createaccount_thanks: getLogin,
     createaccount: getLogin,
     getnewpassword: getLogin,
     forgotpassword: getLogin,
     blog: () => import('./theme/blog'),
-    blog_post: () => import('./theme/blog-post'),
+    blog_post: () => import('./theme/blog'),
     brand: () => import('./theme/brand'),
     brands: () => import('./theme/brands'),
     cart: () => import('./theme/cart'),
@@ -53,8 +50,6 @@ const pageClasses = {
     wishlists: () => import('./theme/wishlist'),
 };
 
-const customClasses = {};
-
 /**
  * This function gets added to the global window and then called
  * on page load with the current template loaded and JS Context passed in
@@ -64,8 +59,6 @@ const customClasses = {};
  */
 window.stencilBootstrap = function stencilBootstrap(pageType, contextJSON = null, loadGlobal = true) {
     const context = JSON.parse(contextJSON || '{}');
-    const template = context.template;
-    const templateCheck = Object.keys(customClasses).indexOf(template);
 
     return {
         load() {
@@ -80,15 +73,6 @@ window.stencilBootstrap = function stencilBootstrap(pageType, contextJSON = null
                 if (typeof pageClassImporter === 'function') {
                     const PageClass = (await pageClassImporter()).default;
                     PageClass.load(context);
-                }
-
-                if (templateCheck > -1) {
-                    // Find the appropriate page loader based on template
-                    const customClassImporter = customClasses[template];
-                    if (typeof customClassImporter === 'function') {
-                        const CustomClass = (await customClassImporter()).default;
-                        CustomClass.load(context);
-                    }
                 }
             });
         },

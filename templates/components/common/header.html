@@ -1,31 +1,146 @@
 {{#if banners.top}}
 <div class="banners" data-banner-location="top">
-    {{#each (limit banners.top_metadata 1)}}
-    <div class="banner" data-event-type="promotion" data-entity-id="{{this.id}}" data-name="{{this.banner-name}}" data-position="{{this.location}}" data-banner-id="{{this.banner-name}}">
-        <div data-event-type="promotion-click">
-            {{{this.content}}}
-        </div>
+    <div class="banner">
+        {{{limit banners.top 1}}}
     </div>
-    {{/each}}
 </div>
 {{/if}}
+<div class="header_top">
+    <div class="container">
+        
+        <div class="top_contactdetail">
+            <div class="calus_part">
+                <span class="call_us">Call Us:</span>
+                <a href="tel:+1 888-884-4269">+1 888-884-4269</a>
+            </div>
+            <div class="contact_us">
+               <a href="/contact-us/" class="contact">Contact Us</a>
+            </div> 
+        </div>
+        <div class="freeshiping_part">
+            <span class="freeshipping">FREE SHIPPING ON MOST ORDERS OVER $99</span>
+        </div>
+        <div class="rightside_part">
+            <ul>
+                <li>
+                    <a href="#" class="nav_link"></a>
+                </li>
+                 {{#if settings.gift_certificates_enabled}}
+                    <li>
+                          <a href="{{urls.gift_certificate.purchase}}" class="nav_link">{{lang 'common.gift_cert'}}</a>
+                    </li> 
+                 {{/if}}   
+                 {{#if theme_settings.product_list_display_mode '==' 'list'}}
+                    <li class="navPages-item">
+                         <a class="nav_link" href="{{urls.compare}}" data-compare-nav>{{lang 'common.compare'}} <span class="countPill countPill--positive countPill--alt"></span></a>
+                    </li>
+                {{/if}}
+                <li>
+                    {{#if customer}}
+                            <a class="nav_link" href="{{urls.account.index}}">My Account</a>
+                            <a class="nav_link" href="{{urls.auth.logout}}">{{lang 'common.logout'}}</a>
+                        {{else}}
+                            <a class="nav_link" href="{{urls.auth.login}}">My Account</a>
+                            {{#if settings.account_creation_enabled}}
+                            {{/if}}
+                    {{/if}}
+                </li>
+                <li>
+                    <a href="/account.php?action=order_status/" class="nav_link">Order Status</a>
+                </li>
+            </ul>
+        </div>        
+    </div>
+</div>
+
+
 <header class="header" role="banner">
+    <div class="free_shipingresponsive">
+        <p>FREE SHIPPING ON ALL ORDERS OVER $99</p>
+    </div>
     <a href="#" class="mobileMenu-toggle" data-mobile-menu-toggle="menu">
         <span class="mobileMenu-toggleIcon">Toggle menu</span>
     </a>
-    {{> components/common/navigation}}
-
-    {{#if page_type '===' 'default'}}
-        <h1 class="header-logo header-logo--{{theme_settings.logo-position}}">
-            {{> components/common/store-logo}}
-        </h1>
-    {{else}}
-        <div class="header-logo header-logo--{{theme_settings.logo-position}}">
-            {{> components/common/store-logo}}
+    <div class="container"> 
+        <div class="header_logo"> 
+            {{#if page_type '===' 'default'}}
+                <h1 class="header-logo header-logo--{{theme_settings.logo-position}}">
+                    {{> components/common/store-logo}}
+                </h1>
+            {{else}}
+                <div class="header-logo header-logo--{{theme_settings.logo-position}}">
+                    {{> components/common/store-logo}}
+                </div>
+            {{/if}}
         </div>
-    {{/if}}
-    {{{region name="header_bottom"}}}
-    <div class="navPages-container" id="menu" data-menu>
-        {{> components/common/navigation-menu}}
-    </div>
+
+        <div class="nav_part">
+            {{{region name="header_bottom"}}}
+            <div class="navPages-container" id="menu" data-menu>
+                {{> components/common/navigation-menu}}
+            </div>
+        </div> 
+           
+        <div class="hright_part">
+             <div class="right_search" id="quickSearch" aria-hidden="true" tabindex="-1" data-prevent-quick-search-close>
+                          {{> components/common/quick-search}} 
+            </div>
+            <div class="bmw_series">
+                <span class="series_icon">
+                    <!-- <img src="{{cdn 'assets/img/bmw_series.png'}}" alt="series_icon" title="series_icon" class="red_icon">
+                    <img src="{{cdn 'assets/img/redicon.png'}}" alt="series_icon" title="series_icon" class="red_icon1"> -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 309">
+                       <path id="Прямоугольник_скругл._углы_2_копия_2" data-name="Прямоугольник, скругл. углы 2 копия 2" class="gar" d="M500,410H456a12,12,0,0,1-12-12V344H386v11a35.01,35.01,0,0,1-26.042,33.838A10,10,0,0,1,350,398H323a10,10,0,0,1-9.8-8H198.8a10,10,0,0,1-9.8,8H162a10,10,0,0,1-9.958-9.162A35.01,35.01,0,0,1,126,355V344H68v54a12,12,0,0,1-12,12H12A12,12,0,0,1,0,398V114a12,12,0,0,1,12-12H500a12,12,0,0,1,12,12V398A12,12,0,0,1,500,410ZM150,356a10,10,0,0,0,10,10H352a10,10,0,0,0,10-10V344H344.95a11,11,0,0,1-21.9,0H188.95a11,11,0,0,1-21.9,0H150v12ZM68,320H444V310H68v10Zm0-34H444V276H68v10Zm0-34H444V242H68v10Zm0-34H444V208H68v10Zm0-34H444V174H68v10Zm420-58H24V386H44V162a12,12,0,0,1,12-12H456a12,12,0,0,1,12,12V386h20V126Z" transform="translate(0 -101.5)"/>
+                   </svg>
+                </span>
+                <span class="series_counter">(1)</span>
+                <!-- kaushal html start-->
+               <div class="garbage_menu">
+                   <div class="bmw_series_containt">
+                       <div class="bmw_series_containt_p">
+                       <img src="{{cdn 'assets/img/close.png'}}" class="bmw_series_containt_img">
+                           <span>BMW  F22 F23 or F87 - BMW 2 Series and M2 - 2013+</span>
+                       </div>
+                       <a href="#" class="series_button">CHANGE YOUR BMW</a>
+                   </div>
+               </div>    
+               <!-- kaushal html end-->
+            </div>
+            <div class="cart_quqntity">
+                <li class="navUser-item navUser-item--cart">
+                            <a
+                                class="navUser-action"
+                                data-cart-preview
+                                data-dropdown="cart-preview-dropdown"
+                                data-options="align:right"
+                                href="{{urls.cart}}">
+                                <span class="navUser-item-cartLabel">
+                                  <!--   {{lang 'common.cart'}} -->
+                                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 30" class="cart_icon">
+                                          <metadata><?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
+                                        <x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 5.6-c138 79.159824, 2016/09/14-01:09:01">
+                                           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                                              <rdf:Description rdf:about=""/>
+                                           </rdf:RDF>
+                                        </x:xmpmeta>
+                                        <?xpacket end="w"?></metadata>
+                                        <defs>
+                                            <style>
+                                              .cls-1 {
+                                                fill-rule: evenodd;
+                                              }
+                                            </style>
+                                          </defs>
+                                          <path id="Фигура_1" data-name="Фигура 1" class="cls-1" d="M2615.08,145.121c1.54-.015,6.48-0.38,7.35.236s1.1,2.95,1.49,4.02h21.43c2.66,0,6.9-.528,8.53.63,0.7,2.256-1.92,11.227-2.58,13.872-0.33,1.324-.3,3.567-1.41,4.1l-23,.079c-1.33-.434-1.61-3.506-2.03-4.887q-2.235-7.486-4.46-14.975c-1.96.05-5.55,0.482-6.18-.867C2613.59,146.286,2614.5,145.494,2615.08,145.121Zm9.78,7.33q1.83,6.3,3.67,12.611l19.48-.079q1.38-6.265,2.74-12.532h-25.89Zm1.4,16.473c4.46-.181,4.7,5.185,1.33,5.99a3.075,3.075,0,0,1-3.44-4.335A3.831,3.831,0,0,1,2626.26,168.924Zm22.69,0c4.36-.172,4.86,4.887,1.65,5.911a3.072,3.072,0,0,1-3.6-4.414A4.355,4.355,0,0,1,2648.95,168.924Z" transform="translate(-2614 -145)"/>
+                                        </svg>
+                                </span> 
+                                <span class="countPill{{#if cart.items}} countPill--positive{{/if}} cart-quantity">{{cart.quantity}}</span>
+                            </a>
+
+                            <div class="dropdown-menu" id="cart-preview-dropdown" data-dropdown-content aria-hidden="true"></div>
+                 </li>
+            </div>
+        </div>  
+
+   </div>     
 </header>

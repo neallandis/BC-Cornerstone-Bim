@@ -1,0 +1,15 @@
+<!--subscription Section Start here-->
+<div class="subscription">
+    <div class="subs_img" data-aos-easing="ease-in-back" data-aos-offset="0" data-aos="fade-zoom-in"  data-aos-duration="1000" data-aos-delay="500">
+       <img src="{{cdn 'assets/img/subscribe.jpg'}}">
+    </div> 
+    <div class="container">
+        <div class="subscrip_form" data-aos-easing="ease-in-back" data-aos-offset="0" data-aos="fade-down"  data-aos-duration="1500" data-aos-delay="800">
+             {{#if settings.show_newsletter_box}}
+                {{> components/common/subscription-form}}
+            {{/if}}
+        </div>
+    </div>
+</div>
+ 
+<!--Subscription Section end here-->

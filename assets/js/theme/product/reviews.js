@@ -65,11 +65,11 @@ export default class {
             errorMessage: this.context.reviewRating,
         }, {
             selector: '[name="revtitle"]',
-            validate: 'presence',
+            validate: 'min-length:2',
             errorMessage: this.context.reviewSubject,
         }, {
             selector: '[name="revtext"]',
-            validate: 'presence',
+            validate: 'min-length:2',
             errorMessage: this.context.reviewComment,
         }, {
             selector: '[name="email"]',
