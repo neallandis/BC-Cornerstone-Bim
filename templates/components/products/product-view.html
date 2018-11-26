@@ -1,22 +1,21 @@
-<div class="productView">
-    <div class="container"> 
-        {{#each product.reviews.messages}}
-            {{#if error}}
-                {{> components/common/alert-error error}}
-            {{/if}}
-            {{#if success}}
-                {{> components/common/alert-success success}}
-            {{/if}}
-        {{/each}}
+<div class="productView" {{#if settings.data_tag_enabled}} data-event-type="product" data-entity-id="{{product.id}}" data-name="{{product.title}}" data-product-category="{{#each product.category}}{{#if @last}}{{this}}{{else}}{{this}}, {{/if}}{{/each}}" data-product-brand="{{product.brand.name}}" data-product-price="{{#if product.price.with_tax}}{{product.price.with_tax.value}}{{else}}{{product.price.without_tax.value}}{{/if}}" data-product-variant="single-product-option"{{/if}}>
+{{#each product.reviews.messages}}
+        {{#if error}}
+            {{> components/common/alert-error error}}
+        {{/if}}
+        {{#if success}}
+            {{> components/common/alert-success success}}
+        {{/if}}
+    {{/each}}
 
     <section class="productView-details">
         <div class="productView-product">
-        {{#if product.brand}}
-            <h2 class="productView-brand"{{#if schema}} itemprop="brand" itemscope itemtype="http://schema.org/Brand"{{/if}}>
+            <h1 class="productView-title" {{#if schema}}itemprop="name"{{/if}}>{{product.title}}</h1>
+            {{#if product.brand}}
+                <h2 class="productView-brand"{{#if schema}} itemprop="brand" itemscope itemtype="http://schema.org/Brand"{{/if}}>
                     <a href="{{product.brand.url}}"{{#if schema}} itemprop="url"{{/if}}><span{{#if schema}} itemprop="name"{{/if}}>{{product.brand.name}}</span></a>
                 </h2>
             {{/if}}
-            <h1 class="productView-title" {{#if schema}}itemprop="name"{{/if}}>{{product.title}}</h1>
             {{#if product.call_for_price}}
                 <p class="productView-price">
                     <span>{{product.call_for_price}}</span>
@@ -42,7 +41,7 @@
                     {{> components/products/ratings rating=product.rating}}
                     <span class="productView-reviewLink">
                         {{#if product.num_reviews '>' 0}}
-                            <a href="{{product.url}}#product-reviews" class="write_review_custom">
+                            <a href="{{product.url}}#product-reviews">
                                 {{lang 'products.reviews.link_to_review' total=product.num_reviews}}
                             </a>
                         {{else}}
@@ -62,41 +61,26 @@
             </div>
             {{product.detail_messages}}
             <dl class="productView-info">
-                <div class="product_contain sku">
-                    {{#if product.sku}}
-                        <dt class="productView-info-name">{{lang 'products.sku'}}</dt>
-                        <dd class="productView-info-value" data-product-sku>{{product.sku}}</dd>
-                    {{/if}}
-                </div>    
-                <div class="product_contain">
-                    {{#if product.upc}}
-                        <dt class="productView-info-name">{{lang 'products.upc'}}</dt>
-                        <dd class="productView-info-value" data-product-upc>{{product.upc}}</dd>
-                    {{/if}}
-                </div>
-                <div class="product_contain">    
-                    {{#if product.condition}}
-                        <dt class="productView-info-name">{{lang 'products.condition'}}</dt>
-                        <dd class="productView-info-value">{{product.condition}}</dd>
-                    {{/if}}
-                </div>
-                
-                <div class="product_contain"> 
-                    {{#each product.custom_fields}}
-                        {{#if name '==' 'Manufacturer Number'}}
-                        <dt class="productView-info-name">{{name}}:</dt>
-                        <dd class="productView-info-value">{{{value}}}</dd>
-                        {{/if}}
-                    {{/each}}
-                </div>    
-                
-                <div class="product_contain">    
-                    {{#all product.weight theme_settings.show_product_weight}}
-                        <dt class="productView-info-name">{{lang 'products.weight'}}</dt>
-                        <dd class="productView-info-value" data-product-weight>{{product.weight}}</dd>
-                    {{/all}}
-              </div>
-              <div class="product_contain"> 
+                {{#if product.sku}}
+                    <dt class="productView-info-name">{{lang 'products.sku'}}</dt>
+                    <dd class="productView-info-value" data-product-sku>{{product.sku}}</dd>
+                {{/if}}
+                {{#if product.upc}}
+                    <dt class="productView-info-name">{{lang 'products.upc'}}</dt>
+                    <dd class="productView-info-value" data-product-upc>{{product.upc}}</dd>
+                {{/if}}
+                {{#if product.condition}}
+                    <dt class="productView-info-name">{{lang 'products.condition'}}</dt>
+                    <dd class="productView-info-value">{{product.condition}}</dd>
+                {{/if}}
+                {{#if product.availability}}
+                    <dt class="productView-info-name">{{lang 'products.availability'}}</dt>
+                    <dd class="productView-info-value">{{product.availability}}</dd>
+                {{/if}}
+                {{#all product.weight theme_settings.show_product_weight}}
+                    <dt class="productView-info-name">{{lang 'products.weight'}}</dt>
+                    <dd class="productView-info-value" data-product-weight>{{product.weight}}</dd>
+                {{/all}}
                 {{#all product.width product.height product.depth theme_settings.show_product_dimensions}}
                     <dt class="productView-info-name">{{lang 'products.width'}}</dt>
                     <dd class="productView-info-value" data-product-width>
@@ -107,7 +91,6 @@
                         ({{lang 'products.measurement.imperial'}})
                         {{/if}}
                     </dd>
-                <div class="product_contain">     
                     <dt class="productView-info-name">{{lang 'products.height'}}</dt>
                     <dd class="productView-info-value" data-product-height>
                         {{product.height}}
@@ -117,8 +100,6 @@
                         ({{lang 'products.measurement.imperial'}})
                         {{/if}}
                     </dd>
-                </div>
-                <div class="product_contain">     
                     <dt class="productView-info-name">{{lang 'products.depth'}}</dt>
                     <dd class="productView-info-value" data-product-depth>
                         {{product.depth}}
@@ -128,78 +109,91 @@
                         ({{lang 'products.measurement.imperial'}})
                         {{/if}}
                     </dd>
-                </div>
-                <div class="product_contain">     
-                    {{/all}}
-                    {{#if product.min_purchase_quantity}}
-                        <dt class="productView-info-name">{{lang 'products.min_purchase_quantity'}}</dt>
-                        <dd class="productView-info-value">{{lang 'products.purchase_units' quantity=product.min_purchase_quantity}}</dd>
-                    {{/if}}
-                </div>
-                <div class="product_contain">     
-                    {{#if product.max_purchase_quantity}}
-                        <dt class="productView-info-name">{{lang 'products.max_purchase_quantity'}}</dt>
-                        <dd class="productView-info-value">{{lang 'products.purchase_units' quantity=product.max_purchase_quantity}}</dd>
-                    {{/if}}
-                </div>
-                <div class="product_contain">     
-                    {{#if product.gift_wrapping_available}}
-                        <dt class="productView-info-name">{{lang 'products.gift_wrapping'}}</dt>
-                        <dd class="productView-info-value">{{lang 'products.gift_wrapping_available'}}</dd>
-                    {{/if}}
-                </div>
-                <div class="product_contain">     
-                    {{#if product.shipping}}
-                        {{#if product.shipping.calculated}}
-                            <dt class="productView-info-name">{{lang 'products.shipping'}}</dt>
-                            <dd class="productView-info-value">{{lang 'products.shipping_calculated'}}</dd>
-                        {{else}}
-                </div>  
-                <div class="product_contain">   
+                {{/all}}
+                {{#if product.min_purchase_quantity}}
+                    <dt class="productView-info-name">{{lang 'products.min_purchase_quantity'}}</dt>
+                    <dd class="productView-info-value">{{lang 'products.purchase_units' quantity=product.min_purchase_quantity}}</dd>
+                {{/if}}
+                {{#if product.max_purchase_quantity}}
+                    <dt class="productView-info-name">{{lang 'products.max_purchase_quantity'}}</dt>
+                    <dd class="productView-info-value">{{lang 'products.purchase_units' quantity=product.max_purchase_quantity}}</dd>
+                {{/if}}
+                {{#if product.gift_wrapping_available}}
+                    <dt class="productView-info-name">{{lang 'products.gift_wrapping'}}</dt>
+                    <dd class="productView-info-value">{{lang 'products.gift_wrapping_available'}}</dd>
+                {{/if}}
+                {{#if product.shipping}}
+                    {{#if product.shipping.calculated}}
+                        <dt class="productView-info-name">{{lang 'products.shipping'}}</dt>
+                        <dd class="productView-info-value">{{lang 'products.shipping_calculated'}}</dd>
+                    {{else}}
                         {{#if product.shipping.price.value '===' 0}}
                             <dt class="productView-info-name">{{lang 'products.shipping'}}</dt>
                             <dd class="productView-info-value">{{lang 'products.shipping_free'}}</dd>
                         {{else}}
-                </div>        
-                <div class="product_contain"> 
                             <dt class="productView-info-name">{{lang 'products.shipping'}}</dt>
                             <dd class="productView-info-value">{{lang 'products.shipping_fixed' amount=product.shipping.price.formatted}}</dd>
                         {{/if}}
                     {{/if}}
                 {{/if}}
-                </div>
-                <div class="productView-info-bulkPricing">
-                    {{> components/products/bulk-discount-rates bulk_discount_rates=product.bulk_discount_rates}}
-                </div>
+
+                {{#if settings.bulk_discount_enabled}}
+                    <div class="productView-info-bulkPricing">
+                        {{> components/products/bulk-discount-rates bulk_discount_rates=product.bulk_discount_rates}}
+                    </div>
+                {{/if}}
+
+                {{#each product.custom_fields}}
+                    <dt class="productView-info-name">{{name}}:</dt>
+                    <dd class="productView-info-value">{{{value}}}</dd>
+                {{/each}}
             </dl>
         </div>
     </section>
 
-   <section class="productView-images" data-image-gallery>
-            <div class="top">
-                <ul class="productView productView-image productCarousel" 
-                {{#lt product.images.length 1}} id="xyz" {{/lt}}>
-                    {{#each product.images}}
-                    <li class="productView-thumbnail" >
-                        <a href="{{getImage this 'product_size' (cdn ../theme_settings.default_image_product)}}" data-caption="{{#if this.alt}} {{this.alt}} {{else}}  {{/if}}" >
-                            <img src="{{getImage this (cdn ../theme_settings.default_image_product)}}" alt=""  >
-                        </a>
-                    </li>
-                    {{/each}}
-                </ul>   
-                             
+    <section class="productView-images" data-image-gallery>
+        <figure class="productView-image"
+                data-image-gallery-main
+                {{#if product.main_image}}
+                data-zoom-image="{{getImage product.main_image 'zoom_size' (cdn theme_settings.default_image_product)}}"
+                {{/if}}
+                >
+            <div class="productView-img-container">
+                {{!-- Remove the surrounding a-element if there is no main image. --}}
+                {{#if product.main_image}}
+                    <a href="{{getImage product.main_image 'zoom_size' (cdn theme_settings.default_image_product)}}">
+                {{/if}}
+
+                <img class="productView-image--default lazyload"
+                     data-sizes="auto"
+                     src="{{cdn 'img/loading.svg'}}"
+                     data-src="{{getImage product.main_image 'product_size' (cdn theme_settings.default_image_product)}}"
+                     alt="{{product.main_image.alt}}" title="{{product.main_image.alt}}" data-main-image>
+
+                {{#if product.main_image}}
+                    </a>
+                {{/if}}
             </div>
-        <div class="bottom custome-thumbnail">
-            <ul class="productView-thumbnails productCarousel product-list" >
-                {{#forEach product.images}}
+        </figure>
+        <ul class="productView-thumbnails"{{#gt product.images.length 5}} data-slick='{
+                "infinite": false,
+                "mobileFirst": true,
+                "slidesToShow": 5,
+                "slidesToScroll": 1
+            }'{{/gt}}>
+            {{#each product.images}}
                 <li class="productView-thumbnail">
-                    <a class="productView-thumbnail-link" href="{{getImage this 'product_size' (cdn ../theme_settings.default_image_product)}}" data-image-gallery-item >
-                         <img src="{{getImage this (cdn ../theme_settings.default_image_product)}}" alt=""  >
+                    <a
+                        class="productView-thumbnail-link"
+                        href="{{getImage this 'product_size' (cdn ../theme_settings.default_image_product)}}"
+                        data-image-gallery-item
+                        data-image-gallery-new-image-url="{{getImage this 'product_size' (cdn ../theme_settings.default_image_product)}}"
+                        data-image-gallery-zoom-image-url="{{getImage this 'zoom_size' (cdn ../theme_settings.default_image_product)}}">
+                        <img class="lazyload" data-sizes="auto" src="{{cdn 'img/loading.svg'}}" data-src="{{getImage this 'productview_thumb_size' (cdn ../theme_settings.default_image_product)}}" alt="{{this.alt}}" title="{{this.alt}}">
                     </a>
                 </li>
-               {{/forEach}}
-            </ul>
-        </div>
+            {{/each}}
+        </ul>
     </section>
 
     <section class="productView-details">
@@ -207,7 +201,6 @@
             {{#if product.release_date }}
                 <p>{{product.release_date}}</p>
             {{/if}}
-            <h3 class="option_choose" style="display:none;">Choose Options:</h3>
             <form class="form" method="post" action="{{product.cart_url}}" enctype="multipart/form-data"
                   data-cart-item-add>
                 <input type="hidden" name="action" value="add">
@@ -215,7 +208,7 @@
                     {{#each product.customizations}}
                         {{{dynamicComponent 'components/products/customizations'}}}
                     {{/each}}
-                <div data-product-option-change class="p_option">
+                <div data-product-option-change style="display:none;">
                     {{#each product.options}}
                         {{{dynamicComponent 'components/products/options'}}}
                     {{/each}}
@@ -229,186 +222,31 @@
                         <span data-product-stock>{{product.stock_level}}</span>
                     </label>
                 </div>
-                <div class="sicon_qty">
-                        <div class="form-field form-field--increments">
-                            <label class="form-label form-label--alternate"
-                                   for="qty[]">{{lang 'products.quantity'}}</label>
-
-                            <div class="form-increment" data-quantity-change>
-                                <button class="button button--icon" data-action="dec">
-                                    <span class="is-srOnly">{{lang 'products.quantity_decrease'}}</span>
-                                    <!-- <i class="icon" aria-hidden="true">
-                                        <svg>
-                                            <use xlink:href="#icon-keyboard-arrow-down"/>
-                                        </svg>
-                                    </i> -->
-                                    <img src="{{cdn 'assets/img/decrement.png'}}" alt="toggle" title="toggle" class="inc_dec">
-                                </button>
-                                <input class="form-input form-input--incrementTotal"
-                                       id="qty[]"
-                                       name="qty[]"
-                                       type="tel"
-                                       value="{{#if product.min_purchase_quantity}}{{product.min_purchase_quantity}}{{else}}1{{/if}}"
-                                       data-quantity-min="{{product.min_purchase_quantity}}"
-                                       data-quantity-max="{{product.max_purchase_quantity}}"
-                                       min="1"
-                                       pattern="[0-9]*"
-                                       aria-live="polite">
-                                <button class="button button--icon" data-action="inc">
-                                    <span class="is-srOnly">{{lang 'products.quantity_increase'}}</span>
-                                    <!-- <i class="icon" aria-hidden="true">
-                                        <svg>
-                                            <use xlink:href="#icon-keyboard-arrow-up"/>
-                                        </svg>
-                                    </i> -->
-                                    <img src="{{cdn 'assets/img/increment.png'}}" alt="toggle" title="toggle" class="inc_dec">
-                                </button>
-                            </div>
-                        </div>
-                         {{> components/common/share}}
-                </div> 
-
-                    {{#if product.can_purchase}}
-                        {{> components/products/add-to-cart}}
+                {{#if product.can_purchase}}
+                    {{> components/products/add-to-cart}}
+                {{/if}}
+                {{#if product.out_of_stock}}
+                    {{#if product.out_of_stock_message}}
+                        {{> components/common/alert-error product.out_of_stock_message}}
+                    {{else}}
+                        {{> components/common/alert-error (lang 'products.sold_out')}}
                     {{/if}}
-                    {{#if product.out_of_stock}}
-                        {{#if product.out_of_stock_message}}
-                            {{> components/common/alert-error product.out_of_stock_message}}
-                        {{else}}
-                            {{> components/common/alert-error (lang 'products.sold_out')}}
-                        {{/if}}
-                    {{/if}}
+                {{/if}}
             </form>
             {{#if settings.show_wishlist}}
                 {{> components/common/wishlist-dropdown}}
             {{/if}}
         </div>
+        {{> components/common/share}}
         {{{snippet 'product_details'}}}
-
-        <div class="product_contact">
-             <a href="tel:++1 888-884-4269">
-                    <div class="calling">
-                        <div class="calling_contain">
-                            <span class="call_img">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
-                                      <metadata><?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
-                                    <x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 5.6-c138 79.159824, 2016/09/14-01:09:01">
-                                       <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-                                          <rdf:Description rdf:about=""/>
-                                       </rdf:RDF>
-                                    </x:xmpmeta>
-                                    <?xpacket end="w"?></metadata>
-                                    <defs>
-                                        <style>
-                                          .cls-1 {
-                                            fill: #008ac9;
-                                            fill-rule: evenodd;
-                                          }
-                                        </style>
-                                      </defs>
-                                      <path class="cls-1" d="M1867.81,1476.85a2.1,2.1,0,0,0-3.18,0q-1.11,1.1-2.22,2.22a0.437,0.437,0,0,1-.61.11c-0.48-.26-0.99-0.47-1.45-0.76a23.11,23.11,0,0,1-5.56-5.06,12.954,12.954,0,0,1-1.99-3.19,0.465,0.465,0,0,1,.11-0.59c0.75-.71,1.47-1.45,2.2-2.19a2.1,2.1,0,0,0-.01-3.25c-0.58-.59-1.16-1.16-1.74-1.75-0.6-.6-1.19-1.2-1.8-1.79a2.1,2.1,0,0,0-3.17,0c-0.75.74-1.47,1.49-2.23,2.22a3.616,3.616,0,0,0-1.14,2.44,10.284,10.284,0,0,0,.8,4.45,27.056,27.056,0,0,0,4.8,8,29.633,29.633,0,0,0,9.84,7.69,14.235,14.235,0,0,0,5.45,1.59,3.992,3.992,0,0,0,3.43-1.31c0.63-.71,1.35-1.36,2.03-2.04a2.121,2.121,0,0,0,.01-3.23Q1869.6,1478.625,1867.81,1476.85Zm-1.19-4.98,2.3-.39a10.349,10.349,0,0,0-8.75-8.49l-0.32,2.32A8,8,0,0,1,1866.62,1471.87Zm3.6-10.01a17.016,17.016,0,0,0-9.74-4.86l-0.33,2.32a14.816,14.816,0,0,1,12.55,12.15l2.3-.39A17.115,17.115,0,0,0,1870.22,1461.86Z" transform="translate(-1845 -1457)"/>
-                                </svg>
-                            </span>    
-                            <span class="call_link">
-                              +1 888-884-4269
-                            </span>
-                     </div>    
-                 </div>   
-              </a>   
-            <div class="calling">
-                <div class="calling_contain">
-                    <span class="call_img">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="31" height="27" viewBox="0 0 31 27">
-                              <metadata><?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
-                            <x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 5.6-c138 79.159824, 2016/09/14-01:09:01        ">
-                               <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-                                  <rdf:Description rdf:about=""/>
-                               </rdf:RDF>
-                            </x:xmpmeta>
-                            <?xpacket end="w"?></metadata>
-                            <defs>
-                                <style>
-                                  .cls-1 {
-                                    fill: #008ac9;
-                                    fill-rule: evenodd;
-                                  }
-                                </style>
-                              </defs>
-                              <path id="Прямоугольник_8_копия" data-name="Прямоугольник 8 копия" class="cls-1" d="M2233,1476v-15h-23v-3h26v18h-3Zm-2,5h-20.94l-5.06,4v-22h26v18Zm-21-4h6v-2h-6v2Zm16-10h-16v2h16v-2Zm0,4h-16v2h16v-2Z" transform="translate(-2205 -1458)"/>
-                            </svg>
-                    </span>    
-                    <span class="call_link">
-                         <a href="javascript:void(0)" id="chatwithusclick" >Chat with Us
-                         <div data-id="3e53306cc4" class="livechat_button"><a href="https://www.livechatinc.com/help-desk-software/?utm_source=chat_button&utm_medium=referral&utm_campaign=lc_9872945"></a></div>
-                         </a>
-                    </span>
-                </div>    
-            </div>
-        <a href="/contact-us/">
-            <div class="calling">
-                <div class="calling_contain">
-                        <span class="call_img">
-                           <!--  <img src="{{cdn 'assets/img/email.png'}}" alt="call" title="call"> -->
-                            <?xml version="1.0" encoding="iso-8859-1"?>
-                                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                         viewBox="0 0 14 14" style="enable-background:new 0 0 14 14;" xml:space="preserve" alt="call" title="call">
-                                    <g>
-                                        <g>
-                                            <path style="fill:#008ac9;" d="M7,9L5.268,7.484l-4.952,4.245C0.496,11.896,0.739,12,1.007,12h11.986
-                                                c0.267,0,0.509-0.104,0.688-0.271L8.732,7.484L7,9z"/>
-                                            <path style="fill:#008ac9;" d="M13.684,2.271C13.504,2.103,13.262,2,12.993,2H1.007C0.74,2,0.498,2.104,0.318,2.273L7,8
-                                                L13.684,2.271z"/>
-                                            <polygon style="fill:#008ac9;" points="0,2.878 0,11.186 4.833,7.079         "/>
-                                            <polygon style="fill:#008ac9;" points="9.167,7.079 14,11.186 14,2.875       "/>
-                                        </g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    </svg>
-                        </span>    
-                        <span class="call_link">
-                            Contact Us
-                        </span>
-                </div>        
-            </div>
-        </a>
     </section>
-</div>
-</div>
+
     <article class="productView-description"{{#if schema}} itemprop="description"{{/if}}>
-            {{#if theme_settings.show_product_details_tabs}}
-                {{> components/products/description-tabs}}
-            {{else}}
-                {{> components/products/description}}
-            {{/if}}    
+        {{#if theme_settings.show_product_details_tabs}}
+            {{> components/products/description-tabs}}
+        {{else}}
+            {{> components/products/description  settings=../settings}}
+        {{/if}}
     </article>
 </div>
 
@@ -419,76 +257,3 @@
     <div class="modal-content"></div>
     <div class="loadingOverlay"></div>
 </div>
-
-
-<script>
-    $(document).ready(function(){
-         $('.top ul').slick({
-            "speed": 300,
-            "slidesToShow": 1,
-            "draggable": false,
-            "dots": false,
-            "infinite": false,
-            "mobileFirst": true,
-            "slidesToScroll": 1,   
-            "arrows": false,
-            "asNavFor": '.productView-images .bottom ul.productView-thumbnails',
-        });
-       
-        $('.productView-images .bottom ul.productView-thumbnails').slick({
-
-            "dots": false,
-            "draggable": false,
-            "arrows":true,
-            "infinite": false,
-            "mobileFirst": true,
-            "slidesToShow": 2,
-            "slidesToScroll": 1,
-            "focusOnSelect": true,                   
-            "asNavFor": '.top ul',
-            "responsive": [
-               
-                 {
-                    "breakpoint":500,
-                    "settings": {
-                        "slidesToScroll": 1,
-                        "slidesToShow": 2,
-                    }
-                },
-                {
-                    "breakpoint":665,
-                    "settings": {
-                        "slidesToScroll": 1,
-                        "slidesToShow": 3,
-                    }
-                },
-                {
-                    "breakpoint":767,
-                    "settings": {
-                        "slidesToScroll": 1,
-                        "slidesToShow": 3,
-                    }
-                },
-                {
-                    "breakpoint":1023,           
-                       "settings": {
-                        "slidesToScroll": 1,
-                        "slidesToShow": 3,
-                    }
-                },
-                {
-                    "breakpoint":1199,           
-                       "settings": {
-                        "slidesToScroll": 1,
-                        "slidesToShow": 4,
-                    }
-                }
-            ]
-        });
-    });
-
-     setTimeout(function(){ 
-            $('.bottom ul').find('a.is-active').trigger('load');
-         }, 3000);
-   $('.top ul').slickLightbox({caption: 'caption', useHistoryApi: 'true' });
-</script> 

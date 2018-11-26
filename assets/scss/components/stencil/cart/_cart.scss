@@ -273,7 +273,7 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
     }
 
     > svg {
-        fill:#fff;
+        fill: stencilColor("icon-color");
     }
 }
 
@@ -287,15 +287,15 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
     text-align: right;
     width: 100%;
 
-    @include breakpoint("xsmall") {
+    @include breakpoint("small") {
         float: right;
         width: grid-calc(9, $total-columns);
     }
 
-    /*@include breakpoint("xxsmall") {
+    @include breakpoint("medium") {
         margin-bottom: spacing("base");
         width: grid-calc(7, $total-columns);
-    }*/
+    }
 
     @include breakpoint("large") {
         width: grid-calc(5, $total-columns);
@@ -306,7 +306,7 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
     @include clearfix;
     border-bottom: 0;
 
-    @include breakpoint("xxsmall") {
+    @include breakpoint("medium") {
         + .cart-total {
             border-top: container("border");
         }
@@ -334,41 +334,38 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
 }
 
 .cart-total-label {
-    float: left;
     color: stencilColor("color-textSecondary");
-    width: auto;
-    @include breakpoint("xxsmall") {
-        display: block;
-        padding-left: 0;
-        text-align: left;
-        width: grid-calc(4, $total-columns);
-    }
+    width: grid-calc(4, $total-columns);
 
     @include breakpoint("small") {
         width: grid-calc(6, $total-columns);
     }
 
-
+    @include breakpoint("medium") {
+        display: block;
+        padding-left: 0;
+        text-align: left;
+    }
 }
 
 .cart-total-value {
     text-align: left;
-    float: right;
 
-    @include breakpoint("xxsmall") {
+    @include breakpoint("small") {
         text-align: right;
     }
 
-    @include breakpoint("xxsmall") {
+    @include breakpoint("medium") {
         width: grid-calc(6, $total-columns);
     }
 }
 
 .cart-total-label,
 .cart-total-value {
+    float: left;
     padding: spacing("third") 0 spacing("third") $cart-item-spacing;
 
-    @include breakpoint("xxsmall") {
+    @include breakpoint("medium") {
         padding: spacing("base") 0;
     }
 }
@@ -396,13 +393,13 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
 .shipping-estimate-hide,
 .gift-certificate-add,
 .gift-certificate-cancel {
-    color: #000;
+    color: stencilColor("color-textSecondary");
     padding: 0;
     text-decoration: underline;
     transition: color 0.15s ease;
 
     &:hover {
-        color:#f11a22;
+        color: stencilColor("color-textSecondary--hover");
     }
 }
 
@@ -495,7 +492,7 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
         display: block;
         margin-bottom: 0;
 
-        @include breakpoint("xxsmall") {
+        @include breakpoint("small") {
             display: inline-block;
             float: right;
         }
@@ -589,7 +586,7 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
 
 .previewCartItem-content {
     @include grid-column(8, $float: false);
-    //padding-left: 0;
+    padding-left: 0;
 }
 
 .previewCartItem-name {

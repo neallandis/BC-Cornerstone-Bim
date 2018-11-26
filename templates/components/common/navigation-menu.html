@@ -16,14 +16,13 @@
         {{#unless theme_settings.hide_content_navigation}}
             {{#each pages}}
                  <li class="navPages-item navPages-item-page">
-                     <a class="navPages-action" href="{{url}}">{{name}}</a>
+                     <a class="navPages-action{{#if name '==' ../page.title}} activePage{{/if}}" href="{{url}}">{{name}}</a>
                  </li>
              {{/each}}
         {{/unless}}
     </ul>
     <ul class="navPages-list navPages-list--user">
         {{#if currency_selector.currencies.length '>' 1}}
-         <div class="crncy">
             <li class="navPages-item">
                 <a class="navPages-action has-subMenu" href="#" data-collapsible="navPages-currency" aria-controls="navPages-currency" aria-expanded="false">
                     {{lang 'common.currency' code=currency_selector.active_currency_code}} <i class="icon navPages-action-moreIcon" aria-hidden="true"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-chevron-down"></use></svg></i>
@@ -44,9 +43,7 @@
                     </ul>
                 </div>
             </li>
-          </div>  
         {{/if}}
-        
         {{#if settings.gift_certificates_enabled}}
             <li class="navPages-item">
                 <a class="navPages-action" href="{{urls.gift_certificate.purchase}}">{{lang 'common.gift_cert'}}</a>
@@ -67,12 +64,11 @@
         {{#if customer}}
             <li class="navPages-item">
                 <a class="navPages-action has-subMenu" href="{{urls.account.index}}" data-collapsible="navPages-account">
-                    {{lang 'common.account'}} 
+                    {{lang 'common.account'}} <i class="icon navPages-action-moreIcon" aria-hidden="true"><svg><use xlink:href="#icon-chevron-down" /></svg></i>
                 </a>
-                <i class="icon navPages-action-moreIcon" aria-hidden="true"><svg><use xlink:href="#icon-chevron-down" /></svg></i>
                 <div class="navPage-subMenu" id="navPages-account" aria-hidden="true" tabindex="-1">
                     <ul class="navPage-subMenu-list">
-                        <li class="navPage-subMenu-item"> 
+                        <li class="navPage-subMenu-item">
                             <a class="navPage-subMenu-action navPages-action" href="{{urls.account.orders.all}}">{{lang 'account.nav.orders'}}</a>
                         </li>
                         {{#if settings.returns_enabled}}
@@ -84,8 +80,13 @@
                             <a class="navPage-subMenu-action navPages-action" href="{{urls.account.inbox}}">{{lang 'account.mobile_nav.messages'}}</a>
                         </li>
                         <li class="navPage-subMenu-item">
-                            <a class="navPage-subMenu-action navPages-action" href="{{urls.account.addresses}}">{{lang 'account.nav.addresses'}}</span></a>
+                            <a class="navPage-subMenu-action navPages-action" href="{{urls.account.addresses}}">{{lang 'account.nav.addresses'}}</a>
                         </li>
+                        {{#if settings.show_payment_methods}}
+                            <li class="navPage-subMenu-item">
+                                <a class="navPage-subMenu-action navPages-action" href="{{urls.account.payment_methods.all}}">{{lang 'account.nav.payment_methods'}}</a>
+                            </li>
+                        {{/if}}
                         <li class="navPage-subMenu-item">
                             <a class="navPage-subMenu-action navPages-action" href="{{urls.account.wishlists.all}}">{{lang 'account.mobile_nav.wishlists'}}</a>
                         </li>
@@ -105,20 +106,14 @@
             <li class="navPages-item">
                 <a class="navPages-action" href="{{urls.auth.login}}">{{lang 'common.login'}}</a>
                 {{#if settings.account_creation_enabled}}
-                    <a class="orr">{{lang 'common.or'}}</a> <a class="navPages-action" href="{{urls.auth.create_account}}">{{lang 'common.sign_up'}}</a>
+                    {{lang 'common.or'}} <a class="navPages-action" href="{{urls.auth.create_account}}">{{lang 'common.sign_up'}}</a>
                 {{/if}}
             </li>
         {{/if}}
-        <!-- {{#if theme_settings.social_icon_placement_top}}
+        {{#if theme_settings.social_icon_placement_top}}
             <li class="navPages-item">
                 {{> components/common/social-links}}
             </li>
-        {{/if}} -->
-        <li class="navPages-item">
-            <a class="navPages-action" href="/contact-us/">Contact Us</a>
-        </li>
-        <li class="navPages-item">
-            <a class="navPages-action" href="/contact-us/">Call Us: <span class="responsive_call">+1 888-884-4269</span></a>
-        </li>
+        {{/if}}
     </ul>
 </nav>

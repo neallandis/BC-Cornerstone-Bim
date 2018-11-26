@@ -200,7 +200,6 @@
     }
 
     .form-input {
-        border-radius:0;
         @include breakpoint("large") {
             width: auto;
         }

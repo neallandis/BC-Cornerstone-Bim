@@ -123,14 +123,14 @@
     }
 
     &:hover {
-        //border-color: stencilColor("color-primary");
+        border-color: stencilColor("color-primary");
 
         // scss-lint:disable SelectorDepth, NestingDepth
         .card-body {
-            //background-color: stencilColor("color-primary");
+            background-color: stencilColor("color-primary");
 
             .card-text {
-               // color: stencilColor("card--alternate-color--hover");
+                color: stencilColor("card--alternate-color--hover");
             }
         }
 

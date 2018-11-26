@@ -14,20 +14,7 @@ product_results:
 {{/partial}}
 
 {{#partial "page"}}
-
-<div class="filter_breadcrumbs"> 
-        <div class="bred_div">
-            {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
-        </div>
-        <div class="list_filter">
-            {{#if product_results.products.length}}
-                {{> components/products/filter sort=pagination.product_results.sort}}
-            {{/if}}
-       </div>     
-</div> 
-
-
-
+{{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
 {{{snippet 'search'}}}
 <section class="nav">
     {{#if forms.search.query}}
@@ -155,7 +142,7 @@ product_results:
         {{/if}}
 
         <div id="product-listing-container" {{#if forms.search.section '!=' 'product'}}class="u-hiddenVisually"{{/if}}>
-            {{> components/search/product-listing}}
+            {{> components/search/product-listing settings=../settings}}
         </div>
     </main>
 </section>

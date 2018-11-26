@@ -57,8 +57,7 @@
 
     &.is-open {
         display: block;
-        //padding-top: $header-height;
-        padding-top:100px;
+        padding-top: $header-height;
         z-index: 0;
     }
 }
@@ -68,15 +67,10 @@
 // -----------------------------------------------------------------------------
 
 .navPages {
-    //background-color: $navPages-backgroundColor;
-    background: #f8f8f8;
+    background-color: $navPages-backgroundColor;
     height: 100%;
-    max-width:100% !important;
     overflow-y: auto;
     padding: spacing("single");
-    @include breakpoint("medium"){
-        border:none;
-    }
 
     @include breakpoint("medium") {
         @include grid-row(); // 1
@@ -209,19 +203,19 @@
 
             // scss-lint:disable NestingDepth
             svg {
-                fill:#3d3d3d;    /*stencilColor("navPages-color-hover");*/
-                stroke:#3d3d3d;  /*stencilColor("navPages-color-hover");*/
+                fill: stencilColor("navPages-color-hover");
+                stroke: stencilColor("navPages-color-hover");
             }
         }
     }
 
-    &:hover {
+    &:hover, &.activePage {
         color: stencilColor("navPages-color-hover");
 
         // scss-lint:disable NestingDepth
         svg {
-            fill:#3d3d3d; /*stencilColor("navPages-color-hover");*/
-            stroke: #3d3d3d; /*stencilColor("navPages-color-hover");*/
+            fill: stencilColor("navPages-color-hover");
+            stroke: stencilColor("navPages-color-hover");
         }
     }
 
@@ -411,8 +405,8 @@
 // -----------------------------------------------------------------------------
 
 .navPages-quickSearch {
-    //border-bottom: container("border");
-    //margin-bottom: spacing("half");
+    border-bottom: container("border");
+    margin-bottom: spacing("half");
 
     @include breakpoint("medium") {
         display: none;

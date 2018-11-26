@@ -1,70 +1,31 @@
-<div class="bdr">
-    <div class="container">
-      <ul class="tabs" data-tab> 
-              <li class="tab is-active">
-                  <a class="tab-title" href="#tab-description">{{lang 'products.description'}}</a>
-              </li>
-
-              <li class="tab" id="guide-check">
-                  <a class="tab-title" href="#Guide">INSTALLATION GUIDES</a>
-              </li> 
-              {{#if product.warranty}}
-               <li class="tab">
-                  <a class="tab-title" href="#tab-warranty">WARRANTY</a>
-              </li>
-              {{/if}}
-               <li class="tab">
-                  <a class="tab-title" href="#tab-reviews">REVIEWS</a>
-              </li>
-              {{#if product.videos}}
-              <li class="tab">
-                  <a class="tab-title" href="#tab-videos">VIDEO</a>
-              </li>
-          {{/if}}
-      </ul>
+<ul class="tabs" data-tab>
+    <li class="tab is-active">
+        <a class="tab-title" href="#tab-description">{{lang 'products.description'}}</a>
+    </li>
+    {{#if product.warranty}}
+        <li class="tab">
+            <a class="tab-title" href="#tab-warranty">{{lang 'products.warranty'}}</a>
+        </li>
+    {{/if}}
+    {{#all settings.show_product_reviews theme_settings.show_product_reviews_tabs product.reviews.total}}
+        <li class="tab">
+            <a class="tab-title productView-reviewTabLink" href="#tab-reviews">{{lang 'products.reviews.header' total=product.reviews.total}}</a>
+        </li>
+    {{/all}}
+</ul>
+<div class="tabs-contents">
+    <div class="tab-content is-active" id="tab-description">
+        {{{product.description}}}
+        {{{snippet 'product_description'}}}
     </div>
-</div>
-
- <div class="container"> 
-        <div class="tabs-contents">
-              <div class="tab-content is-active" id="tab-description">
-                  {{{product.description}}}
-                  {{{snippet 'product_description'}}}
-              </div>
-
-              <div class="tab-content" id="Guide">
-                  
-                  <ul class="pdf-docs">
-                    {{#each product.custom_fields}}
-                      <li class="p-file">  
-                          <a target='_blank' href='{{value}}'  class="{{#if name '==' 'pdf-files'}}is-pdf{{/if}}">
-                          {{name}}</a>
-                      </li>
-                    {{/each}}
-                  </ul> 
-              </div>
-
-             <div class="tab-content" id="tab-warranty">
-                 {{{product.warranty}}}
-             </div>
-
-             <div class="tab-content" id="tab-reviews">
-              {{#if settings.show_product_reviews}}
-            <div class="tab-content is-active" id="tab-reviews">
-                {{#if product.num_reviews '>' 0}}
-                    {{> components/products/reviews reviews=product.reviews product=product urls=urls}}
-                    {{else}}
-        <p>There are no reviews for this product yet. Please write a review <a href="{{product.url}}{{#if is_ajax}}#write_review{{/if}}" {{#unless is_ajax }}data-reveal-id="modal-review-form"{{/unless}} class="w_review">here</a> .</p>
-                {{/if}}            
-            </div>
-            {{/if}}
-
-            </div>
-
-            <div class="tab-content" id="tab-videos">
-                 {{#if product.videos.list.length}}
-                    {{> components/products/videos product.videos}}
-                {{/if}}
-             </div>
-        </div>
+   {{#if product.warranty}}
+       <div class="tab-content" id="tab-warranty">
+           {{{product.warranty}}}
+       </div>
+   {{/if}}
+   {{#all settings.show_product_reviews theme_settings.show_product_reviews_tabs}}
+       <div class="tab-content" id="tab-reviews">
+           {{> components/products/reviews reviews=product.reviews product=product urls=urls}}
+       </div>
+   {{/all}}
 </div>

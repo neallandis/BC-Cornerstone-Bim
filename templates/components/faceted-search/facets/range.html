@@ -7,12 +7,15 @@
             {{ title }}
         </h5>
 
-       <div class="accordion-navigation-actions">
+        <div class="accordion-navigation-actions">
             {{#if selected}}
                 <a href="{{ remove_url }}" class="facetedSearch-clearLink" data-faceted-search-facet>{{lang 'search.faceted.clear'}}</a>
             {{/if}}
             <svg class="icon accordion-indicator toggleLink-text toggleLink-text--off">
-                <i class="icon navPages-action-moreIcon" aria-hidden="true"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-chevron-down"></use></svg></i>
+                <use xlink:href="#icon-add" />
+            </svg>
+            <svg class="icon accordion-indicator toggleLink-text toggleLink-text--on">
+                <use xlink:href="#icon-remove" />
             </svg>
         </div>
     </div>

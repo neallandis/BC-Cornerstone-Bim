@@ -18,16 +18,13 @@
 // -----------------------------------------------------------------------------
 
 .heroCarousel {
+    width: 1px;
+    min-width: 100%;
     margin-bottom: (spacing("double") + spacing("single"));
-    /*margin-top: -(spacing("single")); // 3*/
-    margin-top: -2rem;
+    margin-top: -(spacing("single")); // 3
 
-    @include breakpoint("small") {
-        margin-top:2.8rem;
-    }
     @include breakpoint("medium") {
-        //margin-top: -(spacing("single") + spacing("base")); // 3
-        margin-top:auto;
+        margin-top: -(spacing("single") + spacing("base")); // 3
     }
 
     &.slick-initialized { // 2
@@ -113,11 +110,9 @@
 
 .heroCarousel-content {
     background-color: rgba($carousel-bgColor, 1);
-    padding:30px 45px;
+    padding: spacing("half") spacing("single") (spacing("double"));
     text-align: center;
-     @include breakpoint("xsmall") {
-        padding: spacing("half") spacing("single") (spacing("double"));
-     }
+
     @include breakpoint("medium") {
         @include carouselOpaqueBackgrounds;
         background-color: rgba($carousel-bgColor, 0.9);

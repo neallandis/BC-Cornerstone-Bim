@@ -1,4 +1,3 @@
-
 ---
 product:
     videos:
@@ -17,9 +16,17 @@ product:
         {{> components/common/alert-info message}}
     {{/each}}
 
-</div>
     <div itemscope itemtype="http://schema.org/Product">
-        {{> components/products/product-view schema=true}}
+        {{> components/products/product-view settings=../settings schema=true  }}
+
+        {{#if product.videos.list.length}}
+            {{> components/products/videos product.videos}}
+        {{/if}}
+
+        {{#all settings.show_product_reviews (if theme_settings.show_product_reviews_tabs '!==' true)}}
+            {{> components/products/reviews reviews=product.reviews product=product urls=urls}}
+        {{/all}}
+
         {{> components/products/tabs}}
 
     </div>

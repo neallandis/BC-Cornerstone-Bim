@@ -8,29 +8,16 @@
         {{#block "head"}} {{/block}}
 
         <link href="{{ head.favicon }}" rel="shortcut icon">
-        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-         {{{stylesheet '/assets/css/theme.css'}}}
-        {{ getFontsCollection }}
-        <style type="text/css" media="screen, print">
-          @font-face {
-               font-family: 'Helvetica Neu Bold';
-               src: url("/content/fonts/helvetica_neu_bold.ttf");
-           }
-       </style>
 
         <script>
             // Change document class from no-js to js so we can detect this in css
             document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
         </script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="{{cdn 'assets/modernizr-custom.js'}}"></script>
-        <script src="{{cdn 'assets/slick.min.js'}}"></script>
-        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <script src="{{cdn 'assets/lightbox.js'}}"></script>
-        <script src="/content/customjs/custom.js"></script>
+
+        {{ getFontsCollection }}
+        {{{stylesheet '/assets/css/theme.css'}}}
+
         {{{head.scripts}}}
         {{{head.rsslinks}}}
 
@@ -38,12 +25,13 @@
         {{inject 'genericError' (lang 'common.generic_error')}}
         {{inject 'maintenanceMode' settings.maintenance}}
         {{inject 'urls' urls}}
+        {{inject 'template' template}}
         {{{snippet 'htmlhead'}}}
     </head>
     <body>
         {{{snippet 'header'}}}
         <svg data-src="{{cdn 'img/icon-sprite.svg'}}" class="icons-svg-sprite"></svg>
-        <img src="/s-zawtrs3uxc/stencil/f4ba0fe0-9d6b-0136-6a4b-65c8afb177d4/e/46a34560-9d7b-0136-e3ea-01d67f7fe261/img/footer_up.png" style="display:none">
+
         {{#if settings.privacy_cookie}}
             {{> components/common/cookie}}
         {{/if}}
